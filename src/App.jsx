@@ -1,10 +1,8 @@
-import NavBar from "./components/NavBar"
+import Ranking from "./screens/Ranking"
 
 const App = () => {
   return (
-    <div className="h-screen">
-      <NavBar />
-    </div>
+      <Ranking />
   )
 }
 

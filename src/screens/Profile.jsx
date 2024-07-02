@@ -1,10 +1,11 @@
 import { useState  } from 'react'
 import useHover from '../hooks/use-hover.js'
+import formatFullname from '../utils/format-fullname'
 import { DoorOpen, Mail, KeyRound, CircleChevronLeft, CircleChevronRight } from 'lucide-react'
 
 const Frame = ({ children }) => {
   return (
-    <div className="w-full h-screen bg-blue">
+    <div className="w-full h-screen">
       {children}
     </div>
   )
@@ -112,7 +113,7 @@ const Avatar = ({ player }) => {
 }
 
 const Profile = ({ player }) => {
-  const fullName = `${player.name} ${player.first_surname} ${player.second_surname}`
+  const fullName = formatFullname(player)
 
   return (
     <div className="flex flex-col items-center gap-y-7 w-full h-full bg-_blue pt-14 pb-7">
