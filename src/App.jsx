@@ -1,8 +1,10 @@
-import Profile from "./screens/Profile"
+import NavBar from "./components/NavBar"
 
 const App = () => {
   return (
-    <Profile />
+    <div className="h-screen">
+      <NavBar />
+    </div>
   )
 }
 
