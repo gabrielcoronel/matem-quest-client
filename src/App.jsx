@@ -1,5 +1,9 @@
-export default () => {
+import Profile from "./screens/Profile"
+
+const App = () => {
   return (
-    <h1>¡Hola Mundo!</h1>
+    <Profile />
   )
 }
+
+export default App
