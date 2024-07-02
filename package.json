@@ -10,8 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@tanstack/react-query": "^5.49.2",
+    "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
+    "framer-motion": "^11.2.12",
+    "lucide-react": "^0.399.0",
     "postcss": "^8.4.38",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
