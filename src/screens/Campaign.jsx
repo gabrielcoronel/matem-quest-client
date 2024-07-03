@@ -56,7 +56,7 @@ const LevelTile = ({ level, description, isSelected }) => {
   )
 }
 
-export default () => {
+const LevelStepper = () => {
   const [selectedLevel, setSelectedLevel] = useState(0)
 
   const levels = [
@@ -124,6 +124,14 @@ export default () => {
           color="#052559"
         />
       </div>
+    </div>
+  )
+}
+
+export default () => {
+  return (
+    <div className="w-full h-full animate__animated animate__fadeIn">
+      <LevelStepper />
     </div>
   )
 }

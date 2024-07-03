@@ -1,8 +1,15 @@
-import Home from "./screens/Home"
+import { Outlet } from 'react-router-dom'
+import NavBar from './components/NavBar'
 
 const App = () => {
   return (
-      <Home />
+    <div className="flex">
+      <NavBar />
+
+      <div>
+        <Outlet />
+      </div>
+    </div>
   )
 }
 

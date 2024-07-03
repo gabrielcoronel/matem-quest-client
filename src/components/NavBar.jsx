@@ -1,18 +1,24 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useHover from '../hooks/use-hover'
-import { DoorOpen } from 'lucide-react'
+import { Medal, UserRound, House } from 'lucide-react'
 
 const links = [
   {
-    title: "Hola",
-    icon: <DoorOpen />,
-    path: "/hola"
+    title: "Jugar",
+    icon: <House />,
+    path: "/home"
   },
   {
-    title: "Hola",
-    icon: <DoorOpen />,
-    path: "/hola"
+    title: "Clasificación",
+    icon: <Medal />,
+    path: "/ranking"
   },
+  {
+    title: "Mi perfil",
+    icon: <UserRound />,
+    path: "/profile"
+  }
 ]
 
 const LinkTile = ({ isSelected, onSelect, title, icon, path }) => {
@@ -79,6 +85,7 @@ const PlayerShield = ({ player }) => {
 }
 
 export default () => {
+  const navigate = useNavigate()
   const [currentLinkIndex, setCurrentLinkIndex] = useState(0)
 
   const player = {
@@ -90,7 +97,7 @@ export default () => {
   }
 
   useEffect(() => {
-    console.log(links[currentLinkIndex].path)
+    navigate(links[currentLinkIndex].path)
   }, [currentLinkIndex])
 
   const linksElements = links

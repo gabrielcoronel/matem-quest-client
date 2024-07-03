@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useHover from '../hooks/use-hover'
-import Button from '../components/Button'
-import LevelStepper from '../components/LevelStepper'
+import { useNavigate, Outlet } from 'react-router-dom'
 
 const Frame = ({ children }) => {
   return (
@@ -51,33 +50,13 @@ const GameModeTabber = ({ gameMode, onChange }) => {
   )
 }
 
-const CampaignMode = () => {
-  return (
-    <div className="w-full h-full animate__animated animate__fadeIn">
-      <LevelStepper />
-    </div>
-  )
-}
-
-const RankedMode = () => {
-  return (
-    <div className="flex flex-col justify-evenly items-center w-full h-full animate__animated animate__fadeIn">
-      <span className="font-primary text-lg text-_black">
-        Compite por puntos y demuestra que eres el mejor
-      </span>
-
-      <div className="w-1/6">
-        <Button
-          text="Jugar"
-          onClick={() => console.log("jugando clasificatoria")}
-        />
-      </div>
-    </div>
-  )
-}
-
 export default () => {
+  const navigate = useNavigate()
   const [currentGameMode, setCurrentGameMode] = useState("campaign")
+
+  useEffect(() => {
+    navigate(`/home/${currentGameMode}`)
+  }, [currentGameMode])
 
   return (
     <Frame>
@@ -89,11 +68,7 @@ export default () => {
           />
         </div>
 
-        {
-          currentGameMode === "campaign" ?
-            <CampaignMode /> :
-            <RankedMode />
-        }
+        <Outlet />
       </div>
     </Frame>
   )
