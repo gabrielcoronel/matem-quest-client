@@ -1,8 +1,8 @@
-import Ranking from "./screens/Ranking"
+import Home from "./screens/Home"
 
 const App = () => {
   return (
-      <Ranking />
+      <Home />
   )
 }
 

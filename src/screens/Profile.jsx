@@ -1,4 +1,4 @@
-import { useState  } from 'react'
+import { useState } from 'react'
 import useHover from '../hooks/use-hover.js'
 import formatFullname from '../utils/format-fullname'
 import { DoorOpen, Mail, KeyRound, CircleChevronLeft, CircleChevronRight } from 'lucide-react'
