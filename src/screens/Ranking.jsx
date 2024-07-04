@@ -75,16 +75,17 @@ const RankingTable = ({ ranking }) => {
   const rankingRowsElements = ranking
     .map(({ score, ...nameFields }, index) => {
       return (
-        <>
+        <div
+          key={index}
+        >
           <Divider />
 
           <RankingRow
-            key={index}
             position={index + 1}
             score={score}
             name={formatFullname(nameFields)}
           />
-        </>
+        </div>
       )
     })
   return (

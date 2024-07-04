@@ -28,9 +28,10 @@ const Actions = ({ player }) => {
   ]
 
   const actionsButtonsElements = actions
-    .map(({ icon, onClick }) => {
+    .map(({ icon, onClick }, index) => {
       return (
         <span
+          key={index}
           className="text-_yellow hover:scale-110 transition-all"
           onClick={onClick}
         >

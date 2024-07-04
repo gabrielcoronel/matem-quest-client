@@ -6,17 +6,17 @@ import { Medal, UserRound, House } from 'lucide-react'
 const links = [
   {
     title: "Jugar",
-    icon: <House />,
+    icon: <House size={30} />,
     path: "/home"
   },
   {
     title: "Clasificación",
-    icon: <Medal />,
+    icon: <Medal size={30} />,
     path: "/ranking"
   },
   {
     title: "Mi perfil",
-    icon: <UserRound />,
+    icon: <UserRound size={30} />,
     path: "/profile"
   }
 ]
@@ -29,7 +29,7 @@ const LinkTile = ({ isSelected, onSelect, title, icon, path }) => {
       {...hoveringEvents}
       onClick={onSelect}
       className={`
-        flex justify-center items-center gap-x-5 py-1 px-5 rounded-lg
+        flex items-center py-2 px-2 rounded-lg
         font-primary text-lg cursor-pointer transition-all
         ${isHovering || isSelected ? "bg-_white" : "bg-_blue"}
       `}
@@ -41,15 +41,6 @@ const LinkTile = ({ isSelected, onSelect, title, icon, path }) => {
         `}
       >
         {icon}
-      </span>
-
-      <span
-        className={`
-          transition-all
-          ${isHovering || isSelected ? "text-_blue" : "text-_white"}
-        `}
-      >
-        {title}
       </span>
     </div>
   )
@@ -115,22 +106,8 @@ export default () => {
     })
 
   return (
-    <div className="flex flex-col justify-between items-center w-fit h-full py-7 px-7 bg-_blue">
-      <div className="flex flex-col justify-start items-center gap-y-5 ">
-        <div
-          className="flex justify-center items-center gap-x-5 font-primary text-lg"
-        >
-          <span className="font-bold text-xl text-_white">
-            MATEM Quest
-          </span>
-        </div>
-
-        {linksElements}
-      </div>
-
-      <PlayerShield
-        player={player}
-      />
+    <div className="flex flex-col w-fit h-full justify-center items-center px-7 gap-y-10 bg-_blue">
+      {linksElements}
     </div>
   )
 }
