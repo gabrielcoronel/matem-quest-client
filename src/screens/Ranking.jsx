@@ -23,31 +23,31 @@ const PeriodStepper = ({ period, onChange }) => {
   }
 
   return (
-    <div className="flex items-center rounded-t-xl bg-_blue">
+    <div className="flex items-center rounded-t-xl border-t-2 border-l-2 border-r-2 border-t-_yellow border-l-_yellow border-r-_yellow">
       <span
         {...decrementButtonHoveringEvents}
         className={`
-          rounded-tl-xl p-1 transition-all
-          ${isDecrementButtonHovering ? "bg-_white text-_blue" : "bg-_blue text-_white"}
+          rounded-tl-lg p-1 transition-all
+          ${isDecrementButtonHovering ? "bg-_yellow" : "bg-_purple"}
         `}
         onClick={handleDecrementPeriod}
       >
-        <ChevronLeft color={isDecrementButtonHovering ? "#052559" : "#f5f5f5"} />
+        <ChevronLeft color={isDecrementButtonHovering ? "#4c1d95"  : "#f5d922"} />
       </span>
 
-      <span className="px-3 py-1 w-40 font-primary text-_white text-center">
+      <span className="px-3 py-1 w-44 font-bold font-primary text-_white text-center">
         {PeriodHandler.toString(period)}
       </span>
 
       <span
         {...incrementButtonHoveringEvents}
         className={`
-          rounded-tr-xl p-1 transition-all
-          ${isIncrementButtonHovering ? "bg-_white text-_blue" : "bg-_blue text-_white"}
+          rounded-tr-lg p-1 transition-all
+          ${isIncrementButtonHovering ? "bg-_yellow" : "bg-_purple"}
         `}
         onClick={handleIncrementPeriod}
       >
-        <ChevronRight color={isIncrementButtonHovering ? "#052559" : "#f5f5f5"} />
+        <ChevronRight color={isIncrementButtonHovering ? "#4c1d95" : "#f5d922"} />
       </span>
     </div>
   )
@@ -56,15 +56,15 @@ const PeriodStepper = ({ period, onChange }) => {
 const RankingRow = ({ position, score, name }) => {
   return (
     <div className="flex w-full rounded-t-lg gap-x-3 py-3 px-5">
-      <span className="w-1/6 font-primary">
+      <span className="w-1/6 font-bold font-primary text-_yellow">
         {position}
       </span>
 
-      <span className="w-2/3 font-primary">
+      <span className="w-2/3 font-bold font-primary text-_white">
         {name}
       </span>
 
-      <span className="w-1/6 font-primary">
+      <span className="w-1/6 font-bold font-primary text-_white">
         {score}
       </span>
     </div>
@@ -89,18 +89,18 @@ const RankingTable = ({ ranking }) => {
       )
     })
   return (
-    <div className="w-full h-full rounded-bl-lg rounded-br-lg rounded-tl-lg border border-_gray shadow-lg shadow-_gray">
+    <div className="w-full h-full rounded-bl-lg rounded-br-lg rounded-tl-lg border-2 border-_yellow">
       <div className="flex w-full rounded-t-lg gap-x-3 py-3 px-5">
         <span className="w-1/6 font-primary">
-          <Medal color="#052559" />
+          <Medal color="#f5d922" />
         </span>
 
         <span className="w-2/3 font-primary">
-          <UserRound color="#052559" />
+          <UserRound color="#f5d922" />
         </span>
 
         <span className="w-1/6 font-primary">
-          <Trophy color="#052559" />
+          <Trophy color="#f5d922" />
         </span>
       </div>
 
@@ -135,7 +135,7 @@ export default () => {
 
   return (
     <Frame>
-      <div className="flex flex-col items-center w-full h-full p-7 bg-_white">
+      <div className="flex flex-col items-center w-full h-full p-7 bg-_purple">
         <div className="flex justify-end items-center w-full">
           <PeriodStepper
             period={currentPeriod}

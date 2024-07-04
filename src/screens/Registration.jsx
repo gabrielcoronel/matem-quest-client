@@ -24,28 +24,20 @@ const useFormSetters = (initialState) => {
   return [formState, createFormSetter]
 }
 
-const Frame = ({ children }) => {
-  return (
-    <div className="w-full h-screen bg-_white">
-      {children}
-    </div>
-  )
-}
-
 const LogIn = ({ onChangeScreen }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full gap-y-5 bg-_white animate__animated animate__fadeIn">
-      <div className="flex flex-col items-center w-1/3 gap-y-3 p-7 border border-_gray rounded-lg shadow-lg shadow-_gray">
-        <span className="font-extrabold font-primary text-3xl text-_blue">
+    <div className="flex flex-col justify-center items-center w-full h-full gap-y-5 animate__animated animate__fadeIn">
+      <div className="flex flex-col items-center w-1/3 gap-y-3 p-7 rounded-lg shadow-lg shadow-_black">
+        <span className="font-extrabold font-primary text-3xl text-_yellow">
           ¡Estás de vuelta!
         </span>
 
         <DoorOpen
           size={80}
-          color="#052559"
+          color="#f5d922"
         />
 
         <TextInput
@@ -69,13 +61,13 @@ const LogIn = ({ onChangeScreen }) => {
 
           <div className="flex justify-center items-center gap-x-1">
             <span
-              className="font-primary text-_black"
+              className="font-primary text-_white"
             >
               ¿No te has registrado?
             </span>
 
             <span
-              className="font-bold hover:underline font-primary text-_blue cursor-pointer"
+              className="font-bold hover:underline font-primary text-_yellow cursor-pointer"
               onClick={onChangeScreen}
             >
               Crea una cuenta
@@ -92,7 +84,7 @@ const PersonalInformationForm = ({ formState, createFormSetter, onSubmit }) => {
     <div className="flex flex-col items-center w-full gap-y-3 animate__animated animate__fadeIn">
       <UserRound
         size={80}
-        color="#052559"
+        color="#f5d922"
       />
 
       <TextInput
@@ -126,7 +118,7 @@ const CredentialsForm = ({ formState, createFormSetter, onSubmit }) => {
     <div className="flex flex-col items-center w-full gap-y-3 animate__animated animate__fadeIn">
       <KeyRound
         size={80}
-        color="#052559"
+        color="#f5d922"
       />
 
       <TextInput
@@ -160,9 +152,9 @@ const SignUp = ({ onChangeScreen }) => {
   })
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full gap-y-5 bg-_white animate__animated animate__fadeIn">
-      <div className="flex flex-col items-center w-1/3 gap-y-3 p-7 border border-_gray rounded-lg shadow-lg shadow-_gray">
-        <span className="font-extrabold font-primary text-3xl text-_blue">
+    <div className="flex flex-col justify-center items-center w-full h-full gap-y-5 animate__animated animate__fadeIn">
+      <div className="flex flex-col items-center w-1/3 gap-y-3 p-7 rounded-lg shadow-lg shadow-_black">
+        <span className="font-extrabold font-primary text-3xl text-_yellow">
           ¡Inicia tu aventura!
         </span>
 
@@ -184,13 +176,13 @@ const SignUp = ({ onChangeScreen }) => {
 
           <div className="flex justify-center items-center gap-x-1">
             <span
-              className="font-primary text-_black"
+              className="font-primary text-_white"
             >
               ¿Ya tienes una cuenta?
             </span>
 
             <span
-              className="font-bold hover:underline font-primary text-_blue cursor-pointer"
+              className="font-bold hover:underline font-primary text-_yellow cursor-pointer"
               onClick={onChangeScreen}
             >
               Inicia sesión
@@ -206,12 +198,12 @@ export default () => {
   const [currentScreen, setCurrentScreen] = useState("log-in")
 
   return (
-    <Frame>
+    <div className="w-full h-screen bg-_purple">
       {
         currentScreen === "log-in" ?
           <LogIn onChangeScreen={() => setCurrentScreen("sign-up")} /> :
           <SignUp onChangeScreen={() => setCurrentScreen("log-in")} />
       }
-    </Frame>
+    </div>
   )
 }

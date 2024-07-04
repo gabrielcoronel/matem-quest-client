@@ -3,7 +3,7 @@ import Button from '../components/Button'
 export default () => {
   return (
     <div className="flex flex-col justify-evenly items-center w-full h-full animate__animated animate__fadeIn">
-      <span className="font-primary text-lg text-_black">
+      <span className="font-primary text-lg text-_white">
         Compite por puntos y demuestra que eres el mejor
       </span>
 

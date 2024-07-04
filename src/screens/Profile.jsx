@@ -89,7 +89,7 @@ const Avatar = ({ player }) => {
         </div>
 
         <div className="flex justify-center items-center w-16 h-16 rounded-full bg-_yellow p-5 absolute right-0 top-2/3">
-          <span className="font-bold font-primary text-2xl text-_blue">
+          <span className="font-bold font-primary text-2xl text-_purple">
             {player.campaign_level}
           </span>
         </div>
@@ -111,7 +111,7 @@ const Profile = ({ player }) => {
 
   return (
     <div className="flex flex-col items-center gap-y-7 w-full h-full pt-14 pb-7">
-      <span className="font-bold font-primary text-4xl text-_blue">
+      <span className="font-bold font-primary text-4xl text-_yellow">
         {fullName}
       </span>
 

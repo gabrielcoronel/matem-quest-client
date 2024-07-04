@@ -31,45 +31,16 @@ const LinkTile = ({ isSelected, onSelect, title, icon, path }) => {
       className={`
         flex items-center py-2 px-2 rounded-lg
         font-primary text-lg cursor-pointer transition-all
-        ${isHovering || isSelected ? "bg-_white" : "bg-_blue"}
+        ${isHovering || isSelected ? "bg-_yellow" : "bg-_purple"}
       `}
     >
       <span
         className={`
           transition-all
-          ${isHovering || isSelected ? "text-_blue" : "text-_white"}
+          ${isHovering || isSelected ? "text-_purple" : "text-_yellow"}
         `}
       >
         {icon}
-      </span>
-    </div>
-  )
-}
-
-const PlayerShield = ({ player }) => {
-  return (
-    <div className="flex justify-evenly items-center gap-x-5">
-      <div
-        className="relative w-fit h-fit"
-      >
-        <div
-          className="w-fit h-fit rounded-full border-4 border-_yellow bg-_black animate__animated animate__fadeIn"
-        >
-          <img
-            src="https://www.rothco.com/upload/product/product/large/1904-A-amazon.jpg"
-            className="w-16 h-16 rounded-full"
-          />
-        </div>
-
-        <div className="flex justify-center items-center w-8 h-8 rounded-full bg-_yellow p-1 absolute right-0 top-2/3">
-          <span className="font-bold font-primary text-sm text-_blue">
-            {player.campaign_level}
-          </span>
-        </div>
-      </div>
-
-      <span className="font-primary text-lg text-_white">
-        {player.name}
       </span>
     </div>
   )
@@ -106,7 +77,7 @@ export default () => {
     })
 
   return (
-    <div className="flex flex-col w-fit h-full justify-center items-center px-7 gap-y-10 bg-_blue">
+    <div className="flex flex-col w-fit h-full justify-center items-center px-7 gap-y-10 bg-_purple">
       {linksElements}
     </div>
   )

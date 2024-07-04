@@ -7,31 +7,13 @@ const LevelCircle = ({ level }) => {
     <div
       className={`
         flex justify-center items-center w-40 h-40 rounded-full
-        border-8 border-_blue bg-_yellow animate__animated animate__fadeIn
+        border-8 border-_purple bg-_yellow animate__animated animate__fadeIn
+        shadow-xl shadow-_black
       `}
     >
-      <span className="font-bold font-primary text-5xl text-_blue">
+      <span className="font-bold font-primary text-5xl text-_purple">
         {level}
       </span>
-    </div>
-  )
-}
-
-const LevelTile = ({ level, description }) => {
-  return (
-    <div className="flex items-center gap-x-10 animate__animated animate__fadeIn">
-      <LevelCircle level={level} />
-
-      <div className="flex flex-col gap-y-3">
-        <span className="font-primary text-xl text-_black">
-          {description}
-        </span>
-
-        <Button
-          text="Jugar"
-          onClick={() => console.log("jugando")}
-        />
-      </div>
     </div>
   )
 }
@@ -44,13 +26,13 @@ const LevelStepper = () => {
       description: "Descripción",
     },
     {
-      description: "Descripción",
+      description: "Descripción1",
     },
     {
-      description: "Descripción",
+      description: "Descripción2",
     },
     {
-      description: "Descripción",
+      description: "Descripción3",
     },
   ]
 
@@ -75,7 +57,7 @@ const LevelStepper = () => {
         >
           <ChevronUp
             size={90}
-            color="#052559"
+            color="#f5d922"
           />
         </div>
 
@@ -90,18 +72,16 @@ const LevelStepper = () => {
         >
           <ChevronDown
             size={90}
-            color="#052559"
+            color="#f5d922"
           />
         </div>
       </div>
 
       <div
-        key={selectedLevelIndex}
-        className="w-full flex flex-col justify-center gap-y-3 animate__animated animate__fadeIn"
+        className="w-full flex flex-col justify-center gap-y-7 animate__animated animate__fadeIn"
       >
         <span
-        key={selectedLevelIndex}
-          className="font-primary text-xl text-_black"
+          className="font-primary text-xl text-_white"
         >
           {levels[selectedLevelIndex].description}
         </span>

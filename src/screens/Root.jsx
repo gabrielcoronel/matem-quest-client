@@ -3,7 +3,7 @@ import NavBar from '../components/NavBar'
 
 export default () => {
   return (
-    <div className="flex w-full h-screen bg-_blue">
+    <div className="flex w-full h-screen bg-_purple">
       <NavBar />
 
       <Outlet />

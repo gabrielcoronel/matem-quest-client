@@ -9,9 +9,9 @@ export default ({ text, onChange, placeholder }) => {
       onFocus={() => setIsFocusing(true)}
       onBlur={() => setIsFocusing(false)}
       className={`
-        flex items-center w-full h-fit py-1.5 px-3 rounded-lg bg-_white
+        flex items-center w-full h-fit py-1.5 px-3 rounded-lg bg-_purple
         hover:scale-105
-        ${isFocusing ? "border-2 border-_blue" : "border border-_gray"}
+        ${isFocusing ? "border-2 border-_yellow" : "border border-_black"}
         transition-all
       `}
     >
@@ -20,7 +20,7 @@ export default ({ text, onChange, placeholder }) => {
         value={text}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}
-        className="w-full h-full outline-none placeholder:text-_gray text-_black transition-all bg-_white"
+        className="w-full h-full outline-none bg-_purple placeholder:text-_yellow text-_white transition-all"
       />
 
       {
@@ -30,7 +30,7 @@ export default ({ text, onChange, placeholder }) => {
               className="h-full cursor-pointer"
               onClick={() => onChange("")}
             >
-              <CircleX color="#052559" />
+              <CircleX color="#f5d922" />
             </div>
           ) :
           null
