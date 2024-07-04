@@ -1,14 +1,7 @@
 import { useState, useEffect } from 'react'
 import useHover from '../hooks/use-hover'
 import { useNavigate, Outlet } from 'react-router-dom'
-
-const Frame = ({ children }) => {
-  return (
-    <div className="w-full h-screen">
-      {children}
-    </div>
-  )
-}
+import Frame from '../components/Frame'
 
 const GameModeTab = ({ title, isSelected, onSelect, orientation }) => {
   const [isHovering, hoveringEvents] = useHover()

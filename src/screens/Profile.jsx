@@ -5,7 +5,7 @@ import { DoorOpen, Mail, KeyRound, CircleChevronLeft, CircleChevronRight } from 
 
 const Frame = ({ children }) => {
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen animate__animated animate__fadeIn">
       {children}
     </div>
   )

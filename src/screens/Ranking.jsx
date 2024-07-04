@@ -4,14 +4,7 @@ import useHover from '../hooks/use-hover'
 import formatFullname from '../utils/format-fullname'
 import PeriodHandler from '../utils/period-handler'
 import Divider from '../components/Divider'
-
-const Frame = ({ children }) => {
-  return (
-    <div className="w-full h-screen">
-      {children}
-    </div>
-  )
-}
+import Frame from '../components/Frame'
 
 const PeriodStepper = ({ period, onChange }) => {
   const [isDecrementButtonHovering, decrementButtonHoveringEvents] = useHover()
