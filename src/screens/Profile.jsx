@@ -2,14 +2,7 @@ import { useState } from 'react'
 import useHover from '../hooks/use-hover.js'
 import formatFullname from '../utils/format-fullname'
 import { DoorOpen, Mail, KeyRound, CircleChevronLeft, CircleChevronRight } from 'lucide-react'
-
-const Frame = ({ children }) => {
-  return (
-    <div className="w-full h-screen animate__animated animate__fadeIn">
-      {children}
-    </div>
-  )
-}
+import Frame from '../components/Frame'
 
 const Actions = ({ player }) => {
   const actions = [
@@ -41,7 +34,7 @@ const Actions = ({ player }) => {
     })
 
   return (
-    <div className="flex justify-end items-center gap-x-5 w-full p-3 bg-_blue">
+    <div className="flex justify-end items-center gap-x-5 w-full p-3">
       {actionsButtonsElements}
     </div>
   )
@@ -117,8 +110,8 @@ const Profile = ({ player }) => {
   const fullName = formatFullname(player)
 
   return (
-    <div className="flex flex-col items-center gap-y-7 w-full h-full bg-_blue pt-14 pb-7">
-      <span className="font-bold font-primary text-4xl text-_white">
+    <div className="flex flex-col items-center gap-y-7 w-full h-full pt-14 pb-7">
+      <span className="font-bold font-primary text-4xl text-_blue">
         {fullName}
       </span>
 
