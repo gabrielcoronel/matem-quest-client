@@ -1,63 +1,43 @@
 import { useState } from 'react'
-import { Play, ChevronUp, ChevronDown } from 'lucide-react'
+import { ChevronUp, ChevronDown } from 'lucide-react'
+import Button from '../components/Button'
 
-const LevelCircle = ({ level, isSelected }) => {
+const LevelCircle = ({ level }) => {
   return (
     <div
       className={`
-        flex justify-center items-center rounded-full
-        ${isSelected ? "w-40 h-40" : "w-32 h-32"}
-        ${!isSelected ? "opacity-60" : ""}
-        border-8 border-_blue bg-_yellow`
-      }
-    >
-      {
-        isSelected ?
-          (
-            <div className="hover:scale-110 transition-all">
-              <Play
-                size={80}
-                color="#052559"
-              />
-            </div>
-          ) :
-          (
-            <span className="font-bold font-primary text-4xl text-_blue">
-              {level}
-            </span>
-          )
-      }
-    </div>
-  )
-}
-
-const LevelTile = ({ level, description, isSelected }) => {
-  return (
-    <div
-      className={`
-        flex items-center animate__animated animate__fadeIn
-        ${isSelected ? "gap-x-10" : "gap-x-7"}
+        flex justify-center items-center w-40 h-40 rounded-full
+        border-8 border-_blue bg-_yellow animate__animated animate__fadeIn
       `}
     >
-      <LevelCircle
-        level={level}
-        isSelected={isSelected}
-      />
-
-      <span
-        className={`
-          font-primary
-          ${isSelected ? "text-xl text-_black" : "text-_gray text-lg"}
-        `}
-      >
-        {description}
+      <span className="font-bold font-primary text-5xl text-_blue">
+        {level}
       </span>
     </div>
   )
 }
 
+const LevelTile = ({ level, description }) => {
+  return (
+    <div className="flex items-center gap-x-10 animate__animated animate__fadeIn">
+      <LevelCircle level={level} />
+
+      <div className="flex flex-col gap-y-3">
+        <span className="font-primary text-xl text-_black">
+          {description}
+        </span>
+
+        <Button
+          text="Jugar"
+          onClick={() => console.log("jugando")}
+        />
+      </div>
+    </div>
+  )
+}
+
 const LevelStepper = () => {
-  const [selectedLevel, setSelectedLevel] = useState(0)
+  const [selectedLevelIndex, setSelectedLevelIndex] = useState(0)
 
   const levels = [
     {
@@ -75,53 +55,60 @@ const LevelStepper = () => {
   ]
 
   const incrementSelectedLevel = () => {
-    const nextSelectedLevel = selectedLevel + 1 < levels.length ? selectedLevel + 1 : levels.length - 1
+    const nextSelectedLevel = selectedLevelIndex + 1 < levels.length ? selectedLevelIndex + 1 : levels.length - 1
 
-    setSelectedLevel(nextSelectedLevel)
+    setSelectedLevelIndex(nextSelectedLevel)
   }
 
   const decrementSelectedLevel = () => {
-    const nextSelectedLevel = selectedLevel - 1 >= 0 ? selectedLevel - 1 : 0
+    const nextSelectedLevel = selectedLevelIndex - 1 >= 0 ? selectedLevelIndex - 1 : 0
 
-    setSelectedLevel(nextSelectedLevel)
+    setSelectedLevelIndex(nextSelectedLevel)
   }
 
-  const levelTilesElements = levels
-    .map(({ description }, index) => {
-      const level = index + 1
-      const isSelected = selectedLevel === index
-
-      return (
-        <LevelTile
-          key={`${level}${isSelected}`}
-          level={level}
-          description={description}
-          isSelected={isSelected}
-        />
-      )
-    })
-
   return (
-    <div className="flex flex-col items-center gap-y-7">
-      <div
-        className="hover:scale-110 transition-all"
-        onClick={decrementSelectedLevel}
-      >
-        <ChevronUp
-          size={80}
-          color="#052559"
+    <div className="w-1/2 flex gap-x-7 animate__animated animate__fadeIn">
+      <div className="w-fit flex flex-col items-center">
+        <div
+          className="hover:scale-110 transition-all"
+          onClick={decrementSelectedLevel}
+        >
+          <ChevronUp
+            size={90}
+            color="#052559"
+          />
+        </div>
+
+        <LevelCircle
+          key={selectedLevelIndex}
+          level={selectedLevelIndex + 1}
         />
+
+        <div
+          className="hover:scale-110 transition-all"
+          onClick={incrementSelectedLevel}
+        >
+          <ChevronDown
+            size={90}
+            color="#052559"
+          />
+        </div>
       </div>
 
-      {levelTilesElements}
-
       <div
-        className="hover:scale-110 transition-all"
-        onClick={incrementSelectedLevel}
+        key={selectedLevelIndex}
+        className="w-full flex flex-col justify-center gap-y-3 animate__animated animate__fadeIn"
       >
-        <ChevronDown
-          size={80}
-          color="#052559"
+        <span
+        key={selectedLevelIndex}
+          className="font-primary text-xl text-_black"
+        >
+          {levels[selectedLevelIndex].description}
+        </span>
+
+        <Button
+          text="Jugar"
+          onClick={() => console.log("jugando")}
         />
       </div>
     </div>
@@ -130,7 +117,7 @@ const LevelStepper = () => {
 
 export default () => {
   return (
-    <div className="w-full h-full animate__animated animate__fadeIn">
+    <div className="flex justify-center items-center w-full h-full animate__animated animate__fadeIn">
       <LevelStepper />
     </div>
   )

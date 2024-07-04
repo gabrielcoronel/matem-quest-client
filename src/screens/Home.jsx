@@ -61,7 +61,7 @@ export default () => {
   return (
     <Frame>
       <div className="flex flex-col items-center w-full h-full p-7 gap-y-7 bg-_white">
-        <div className="flex justify-center items-center w-full py-5">
+        <div className="flex justify-center items-center w-full py-3">
           <GameModeTabber
             gameMode={currentGameMode}
             onChange={setCurrentGameMode}
