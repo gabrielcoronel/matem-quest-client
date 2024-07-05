@@ -1,8 +1,19 @@
 import { useState } from 'react'
-import { Trophy, Medal, UserRound, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import {
+  Trophy,
+  Medal,
+  UserRound,
+  ChevronLeft,
+  ChevronRight,
+  WifiOff,
+  Wind
+} from 'lucide-react'
 import useHover from '../hooks/use-hover'
 import formatFullname from '../utils/format-fullname'
 import PeriodHandler from '../utils/period-handler'
+import { ScoringClient } from '../clients'
+import LoadingIndicator from '../components/LoadingIndicator'
 import Divider from '../components/Divider'
 import Frame from '../components/Frame'
 
@@ -71,9 +82,59 @@ const RankingRow = ({ position, score, name }) => {
   )
 }
 
-const RankingTable = ({ ranking }) => {
-  const rankingRowsElements = ranking
-    .map(({ score, ...nameFields }, index) => {
+const RankingQueryStateIndicator = ({ rankingQuery }) => {
+  if (rankingQuery.isFetching) {
+    return (
+      <LoadingIndicator
+        size={30}
+      />
+    )
+  }
+
+  if (rankingQuery.isError) {
+    return (
+      <div className="flex flex-col items-center gap-y-7 animate__animated animate__fadeIn">
+        <WifiOff
+          color="#f5d922"
+          size={100}
+        />
+
+        <span className="font-primary text-xl text-_white text-center">
+          Al parecer no hay conexión a Internet
+        </span>
+      </div>
+    )
+  }
+
+  if (rankingQuery.data.length === 0) {
+    return (
+      <div className="flex flex-col items-center gap-y-7 animate__animated animate__fadeIn">
+        <Wind
+          color="#f5d922"
+          size={100}
+        />
+
+        <span className="font-primary text-xl text-_white text-center">
+          No hay nada por aquí
+        </span>
+      </div>
+    )
+  }
+}
+
+const RankingTable = ({ period }) => {
+  const rankingQuery = useQuery({
+    queryKey: ["ranking", period],
+    queryFn: () => ScoringClient.getRanking(PeriodHandler.toISODate(period))
+  })
+
+  const canShowElements =
+    (!rankingQuery.isFetching) &&
+    (!rankingQuery.isError) &&
+    (rankingQuery.data.length > 0)
+
+  const rankingRowsElements = rankingQuery
+    .data?.map(({ score, ...nameFields }, index) => {
       return (
         <div
           key={index}
@@ -88,6 +149,7 @@ const RankingTable = ({ ranking }) => {
         </div>
       )
     })
+
   return (
     <div className="w-full h-full rounded-bl-lg rounded-br-lg rounded-tl-lg border-2 border-_yellow">
       <div className="flex w-full rounded-t-lg gap-x-3 py-3 px-5">
@@ -104,34 +166,21 @@ const RankingTable = ({ ranking }) => {
         </span>
       </div>
 
-      {rankingRowsElements}
+      {
+        canShowElements ?
+          rankingRowsElements :
+          (
+            <div className="flex justify-center items-center w-full h-full">
+              <RankingQueryStateIndicator rankingQuery={rankingQuery} />
+            </div>
+          )
+      }
     </div>
   )
 }
 
 export default () => {
   const [currentPeriod, setCurrentPeriod] = useState(PeriodHandler.getCurrent())
-
-  const ranking = [
-    {
-      name: "Gabriel",
-      first_surname: "Coronel",
-      second_surname: "Cascante",
-      score: 17
-    },
-    {
-      name: "Gabriel",
-      first_surname: "Coronel",
-      second_surname: "Cascante",
-      score: 17
-    },
-    {
-      name: "Gabriel",
-      first_surname: "Coronel",
-      second_surname: "Cascante",
-      score: 17
-    },
-  ]
 
   return (
     <Frame>
@@ -144,7 +193,7 @@ export default () => {
         </div>
 
         <RankingTable
-          ranking={ranking}
+          period={currentPeriod}
         />
       </div>
     </Frame>
