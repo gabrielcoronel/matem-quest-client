@@ -19,6 +19,13 @@ export default class {
     return formattedPeriod
   }
 
+  static toISODate(period) {
+    const date = new Date(Date.UTC(period.year, period.month - 1, 1, 0, 0, 0, 0))
+    const isoDate = date.toISOString()
+
+    return isoDate
+  }
+
   static getCurrent() {
     const currentDate = new Date()
     const currentMonth = currentDate.getMonth() + 1
@@ -46,8 +53,8 @@ export default class {
 
   static getPrevious(period) {
     const possiblePreviousMonth = period.month - 1
-    const previousMonth = possiblePreviousMonth > 0 ? possiblePreviousMonth : 12 + possiblePreviousMonth
-    const previousYear = possiblePreviousMonth > 0 ? period.year : period.year - 1
+    const previousMonth = possiblePreviousMonth >= 1 ? possiblePreviousMonth : 12 + possiblePreviousMonth
+    const previousYear = possiblePreviousMonth >= 1 ? period.year : period.year - 1
 
     const previousPeriod = {
       month: previousMonth,
