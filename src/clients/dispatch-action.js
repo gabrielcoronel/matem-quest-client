@@ -8,15 +8,25 @@ const axiosClient = axios.create({
 })
 
 export default async (endpoint, data) => {
-  try {
-    const response = await axiosClient.post(endpoint, data)
+  const token = localStorage.getItem("matem-quest-token")
 
-    if (response.status < 200 || response.status > 299) {
-      throw ServerError(response.data)
-    }
+  try {
+    const response = await axiosClient.post(
+      endpoint,
+      data,
+      {
+        headers: {
+          token
+        }
+      }
+    )
 
     return response.data
   } catch (error) {
-    throw new HTTPError(error)
+    if (error.response) {
+      throw new ServerError(error.response.data)
+    } else {
+      throw new HTTPError(error)
+    }
   }
 }

@@ -18,9 +18,9 @@ export default class {
     return session
   }
 
-  static async logOut(token) {
+  static async logOut(sessionId) {
     const data = {
-      token
+      sessionId
     }
 
     await dispatchAction("/auth-service/log-out", data)
