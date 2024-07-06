@@ -30,8 +30,61 @@ const useFormSetters = (initialState) => {
 }
 
 const LogIn = ({ onChangeScreen }) => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  const handleOnMutate = () => {
+    toast(
+      <Spinner size={40} />,
+      "Iniciando sesión",
+      "Espera un momento"
+    )
+  }
+
+  const handleOnError = (error) => {
+    const [httpError, serverError] = readClientError(error)
+
+    if (httpError) {
+      toast(
+        <WifiOff size={40} />,
+        "Error de conexión",
+        "Revisa tu conexión a Internet"
+      )
+
+      return
+    }
+
+    if (serverError) {
+      toast(
+        <Ban size={40} />,
+        "Credenciales incorrectas",
+        "Revisa que estén bien escritas"
+      )
+
+      return
+    }
+  }
+
+  const handleOnSuccess = ({ player_id, token }) => {
+    toast(
+      <Check size={40} />,
+      "Éxito",
+      "Bienvenido de vuelta"
+    )
+
+    localStorage.setItem("matem-quest-token", token)
+    localStorage.setItem("matem-quest-player-id", `${player_id}`)
+
+    navigate("/home")
+  }
+
+  const logInMutation = useMutation({
+    mutationFn: ({ email, password }) => AuthClient.logIn(email, password),
+    onMutate: handleOnMutate,
+    onError: handleOnError,
+    onSuccess: handleOnSuccess
+  })
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full gap-y-5 animate__animated animate__fadeIn">
@@ -59,6 +112,7 @@ const LogIn = ({ onChangeScreen }) => {
 
         <Button
           text="Iniciar sesión"
+          onClick={() => logInMutation.mutate({ email, password })}
         />
 
         <div className="flex flex-col justify-center items-center w-full gap-y-3">
