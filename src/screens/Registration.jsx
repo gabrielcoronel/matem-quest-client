@@ -1,9 +1,14 @@
 import { useState } from 'react'
-import { UserRound, KeyRound, DoorOpen } from 'lucide-react'
+import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
+import { UserRound, KeyRound, DoorOpen, Check, WifiOff, Ban } from 'lucide-react'
 import Divider from '../components/Divider'
 import TextInput from '../components/TextInput'
 import PasswordInput from '../components/PasswordInput'
 import Button from '../components/Button'
+import Spinner from '../components/Spinner'
+import toast from '../utils/toast'
+import { readClientError, AuthClient } from '../clients'
 
 const useFormSetters = (initialState) => {
   const [formState, setFormState] = useState(initialState)
@@ -95,14 +100,14 @@ const PersonalInformationForm = ({ formState, createFormSetter, onSubmit }) => {
 
       <TextInput
         placeholder="Primer apellido"
-        text={formState.firstSurname}
-        onChange={createFormSetter("firstSurname")}
+        text={formState.first_surname}
+        onChange={createFormSetter("first_surname")}
       />
 
       <TextInput
         placeholder="Segundo apellido"
-        text={formState.secondSurname}
-        onChange={createFormSetter("secondSurname")}
+        text={formState.second_surname}
+        onChange={createFormSetter("second_surname")}
       />
 
       <Button
@@ -142,13 +147,66 @@ const CredentialsForm = ({ formState, createFormSetter, onSubmit }) => {
 }
 
 const SignUp = ({ onChangeScreen }) => {
+  const navigate = useNavigate()
   const [currentForm, setCurrentForm] = useState("personal")
   const [formState, createFormSetter] = useFormSetters({
     name: "",
-    firstSurname: "",
-    secondSurname: "",
+    first_surname: "",
+    second_surname: "",
     email: "",
     password: ""
+  })
+
+  const handleOnMutate = () => {
+    toast(
+      <Spinner size={40} />,
+      "Creando cuenta",
+      "Espera un momento"
+    )
+  }
+
+  const handleOnError = (error) => {
+    const [httpError, serverError] = readClientError(error)
+
+    if (httpError) {
+      toast(
+        <WifiOff size={40} />,
+        "Error de conexión",
+        "Revisa tu conexión a Internet"
+      )
+
+      return
+    }
+
+    if (serverError) {
+      toast(
+        <Ban size={40} />,
+        "Correo en uso",
+        "Utiliza otro correo"
+      )
+
+      return
+    }
+  }
+
+  const handleOnSuccess = ({ player_id, token }) => {
+    toast(
+      <Check size={40} />,
+      "Éxito",
+      "Disfruta tu aventura"
+    )
+
+    localStorage.setItem("matem-quest-token", token)
+    localStorage.setItem("matem-quest-player-id", `${player_id}`)
+
+    navigate("/home")
+  }
+
+  const signUpMutation = useMutation({
+    mutationFn: (player) => AuthClient.signUp(player),
+    onMutate: handleOnMutate,
+    onError: handleOnError,
+    onSuccess: handleOnSuccess
   })
 
   return (
@@ -168,6 +226,7 @@ const SignUp = ({ onChangeScreen }) => {
             <CredentialsForm
               formState={formState}
               createFormSetter={createFormSetter}
+              onSubmit={() => signUpMutation.mutate(formState)}
             />
         }
 
