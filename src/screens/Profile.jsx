@@ -1,22 +1,30 @@
 import { useState } from 'react'
 import useHover from '../hooks/use-hover.js'
+import useModalHandler from '../hooks/use-modal-handler.js'
 import formatFullname from '../utils/format-fullname'
 import { DoorOpen, Mail, KeyRound, CircleChevronLeft, CircleChevronRight } from 'lucide-react'
 import Frame from '../components/Frame'
+import LogOutModal from '../components/LogOutModal'
+import ChangeEmailModal from '../components/ChangeEmailModal'
+import ChangePasswordModal from '../components/ChangePasswordModal'
 
 const Actions = ({ player }) => {
+  const logOutModalHandler = useModalHandler()
+  const changeEmailModalHandler = useModalHandler()
+  const changePasswordModalHandler = useModalHandler()
+
   const actions = [
     {
       icon: <DoorOpen size={40} />,
-      onClick: null
+      onClick: logOutModalHandler.onOpen
     },
     {
       icon: <Mail size={40} />,
-      onClick: null
+      onClick: changeEmailModalHandler.onOpen
     },
     {
       icon: <KeyRound size={40} />,
-      onClick: null
+      onClick: changePasswordModalHandler.onOpen
     }
   ]
 
@@ -36,6 +44,21 @@ const Actions = ({ player }) => {
   return (
     <div className="flex justify-end items-center gap-x-5 w-full p-3">
       {actionsButtonsElements}
+
+      <LogOutModal
+        isOpen={logOutModalHandler.isOpen}
+        onClose={logOutModalHandler.onClose}
+      />
+
+      <ChangeEmailModal
+        isOpen={changeEmailModalHandler.isOpen}
+        onClose={changeEmailModalHandler.onClose}
+      />
+
+      <ChangePasswordModal
+        isOpen={changePasswordModalHandler.isOpen}
+        onClose={changePasswordModalHandler.onClose}
+      />
     </div>
   )
 }
