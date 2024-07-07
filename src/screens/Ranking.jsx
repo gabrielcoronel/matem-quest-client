@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import useHover from '../hooks/use-hover'
+import formatFullname from '../utils/format-fullname'
+import PeriodHandler from '../utils/period-handler'
+import { ScoringClient } from '../clients'
 import {
   Trophy,
   Medal,
@@ -9,13 +13,7 @@ import {
   WifiOff,
   Wind
 } from 'lucide-react'
-import useHover from '../hooks/use-hover'
-import formatFullname from '../utils/format-fullname'
-import PeriodHandler from '../utils/period-handler'
-import { ScoringClient } from '../clients'
-import LoadingIndicator from '../components/LoadingIndicator'
-import Divider from '../components/Divider'
-import Frame from '../components/Frame'
+import { LoadingIndicator, Divider, Frame } from '../components'
 
 const PeriodStepper = ({ period, onChange }) => {
   const [isDecrementButtonHovering, decrementButtonHoveringEvents] = useHover()

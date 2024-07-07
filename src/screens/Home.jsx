@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import useHover from '../hooks/use-hover'
 import { useNavigate, Outlet } from 'react-router-dom'
-import Frame from '../components/Frame'
+import { Frame } from '../components'
 
 const GameModeTab = ({ title, isSelected, onSelect, orientation }) => {
   const [isHovering, hoveringEvents] = useHover()

@@ -1,16 +1,25 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { usePlayer } from '../contexts/player-context'
 import useHover from '../hooks/use-hover.js'
 import useModalHandler from '../hooks/use-modal-handler.js'
 import formatFullname from '../utils/format-fullname'
-import { usePlayer } from '../contexts/player-context'
-import { DoorOpen, Mail, KeyRound, CircleChevronLeft, CircleChevronRight, WifiOff } from 'lucide-react'
-import Frame from '../components/Frame'
-import LogOutModal from '../components/LogOutModal'
-import ChangeEmailModal from '../components/ChangeEmailModal'
-import ChangePasswordModal from '../components/ChangePasswordModal'
-import LoadingIndicator from '../components/LoadingIndicator'
 import { PlayersClient } from '../clients'
+import {
+  DoorOpen,
+  Mail,
+  KeyRound,
+  CircleChevronLeft,
+  CircleChevronRight,
+  WifiOff
+} from 'lucide-react'
+import {
+  Frame,
+  LogOutModal,
+  ChangeEmailModal,
+  ChangePasswordModal,
+  LoadingIndicator
+} from '../components'
 
 const Actions = ({ player }) => {
   const logOutModalHandler = useModalHandler()

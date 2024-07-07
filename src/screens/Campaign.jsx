@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ChevronUp, ChevronDown } from 'lucide-react'
-import Button from '../components/Button'
+import { Button } from '../components'
 
 const LevelCircle = ({ level }) => {
   return (

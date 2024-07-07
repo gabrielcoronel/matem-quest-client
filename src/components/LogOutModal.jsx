@@ -1,6 +1,5 @@
-import Modal from './Modal'
-import Button from './Button'
 import { DoorOpen } from 'lucide-react'
+import { Modal, Button } from './'
 
 export default ({ isOpen, onClose }) => {
   return (

@@ -1,9 +1,6 @@
 import { useState } from 'react'
-import Modal from './Modal'
-import TextInput from './TextInput'
-import PasswordInput from './PasswordInput'
-import Button from './Button'
 import { Mail } from 'lucide-react'
+import { Modal, TextInput, PasswordInput, Button } from './'
 
 export default ({ isOpen, onClose }) => {
   const [newEmail, setNewEmail] = useState("")

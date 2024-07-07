@@ -2,14 +2,23 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { usePlayer } from '../contexts/player-context'
-import { UserRound, KeyRound, DoorOpen, Check, WifiOff, Ban } from 'lucide-react'
-import Divider from '../components/Divider'
-import TextInput from '../components/TextInput'
-import PasswordInput from '../components/PasswordInput'
-import Button from '../components/Button'
-import Spinner from '../components/Spinner'
 import toast from '../utils/toast'
 import { readClientError, AuthClient } from '../clients'
+import {
+  UserRound,
+  KeyRound,
+  DoorOpen,
+  Check,
+  WifiOff,
+  Ban
+} from 'lucide-react'
+import {
+  Divider,
+  TextInput,
+  PasswordInput,
+  Button,
+  Spinner
+} from '../components'
 
 const useFormSetters = (initialState) => {
   const [formState, setFormState] = useState(initialState)

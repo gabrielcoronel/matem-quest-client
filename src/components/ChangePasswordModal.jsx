@@ -1,8 +1,6 @@
 import { useState } from 'react'
-import Modal from './Modal'
-import PasswordInput from './PasswordInput'
-import Button from './Button'
 import { KeyRound } from 'lucide-react'
+import { Modal, PasswordInput, Button } from './'
 
 export default ({ isOpen, onClose }) => {
   const [oldPassword, setOldPassword] = useState("")
