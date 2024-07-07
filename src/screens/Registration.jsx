@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { usePlayer } from '../contexts/player-context'
 import { UserRound, KeyRound, DoorOpen, Check, WifiOff, Ban } from 'lucide-react'
 import Divider from '../components/Divider'
 import TextInput from '../components/TextInput'
@@ -31,6 +32,7 @@ const useFormSetters = (initialState) => {
 
 const LogIn = ({ onChangeScreen }) => {
   const navigate = useNavigate()
+  const playerContextValue = usePlayer()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -74,7 +76,8 @@ const LogIn = ({ onChangeScreen }) => {
     )
 
     localStorage.setItem("matem-quest-token", token)
-    localStorage.setItem("matem-quest-player-id", `${player_id}`)
+
+    playerContextValue.setPlayer(() => ({ ...playerContextValue.player, playerId: player_id }))
 
     navigate("/home")
   }
@@ -202,6 +205,7 @@ const CredentialsForm = ({ formState, createFormSetter, onSubmit }) => {
 
 const SignUp = ({ onChangeScreen }) => {
   const navigate = useNavigate()
+  const playerContextValue = usePlayer()
   const [currentForm, setCurrentForm] = useState("personal")
   const [formState, createFormSetter] = useFormSetters({
     name: "",
@@ -251,7 +255,8 @@ const SignUp = ({ onChangeScreen }) => {
     )
 
     localStorage.setItem("matem-quest-token", token)
-    localStorage.setItem("matem-quest-player-id", `${player_id}`)
+
+    playerContextValue.setPlayer(() => ({ ...playerContextValue.player, playerId: player_id }))
 
     navigate("/home")
   }
