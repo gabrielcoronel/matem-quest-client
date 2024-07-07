@@ -1,12 +1,16 @@
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import useHover from '../hooks/use-hover.js'
 import useModalHandler from '../hooks/use-modal-handler.js'
 import formatFullname from '../utils/format-fullname'
-import { DoorOpen, Mail, KeyRound, CircleChevronLeft, CircleChevronRight } from 'lucide-react'
+import { usePlayer } from '../contexts/player-context'
+import { DoorOpen, Mail, KeyRound, CircleChevronLeft, CircleChevronRight, WifiOff } from 'lucide-react'
 import Frame from '../components/Frame'
 import LogOutModal from '../components/LogOutModal'
 import ChangeEmailModal from '../components/ChangeEmailModal'
 import ChangePasswordModal from '../components/ChangePasswordModal'
+import LoadingIndicator from '../components/LoadingIndicator'
+import { PlayersClient } from '../clients'
 
 const Actions = ({ player }) => {
   const logOutModalHandler = useModalHandler()
@@ -144,19 +148,44 @@ const Profile = ({ player }) => {
 }
 
 export default () => {
-  const player = {
-    name: "Gabriel",
-    first_surname: "Coronel",
-    second_surname: "Cascante",
-    campaign_level: 2,
-    badges: [1, 2, 3]
+  const { player: { playerId } } = usePlayer()
+  const playerQuery = useQuery({
+    queryKey: ["profile", playerId],
+    queryFn: () => PlayersClient.findById(playerId)
+  })
+
+  if (playerQuery.isFetching) {
+    return (
+      <Frame>
+        <div className="flex justify-center items-center w-full h-full">
+          <LoadingIndicator size={40} />
+        </div>
+      </Frame>
+    )
+  }
+
+  if (playerQuery.isError) {
+    return (
+      <Frame>
+        <div className="flex flex-col justify-center items-center gap-y-7 w-full h-full animate__animated animate__fadeIn">
+          <WifiOff
+            color="#f5d922"
+            size={120}
+          />
+
+          <span className="font-primary text-2xl text-_white text-center">
+            Al parecer no hay conexión a Internet
+          </span>
+        </div>
+      </Frame>
+    )
   }
 
   return (
     <Frame>
-      <Actions player={player} />
+      <Actions player={playerQuery.data} />
 
-      <Profile player={player} />
+      <Profile player={playerQuery.data} />
     </Frame>
   )
 }
