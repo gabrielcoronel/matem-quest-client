@@ -6,7 +6,16 @@ import { PlayerProvider } from './contexts/player-context'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-import { Root, Home, Campaign, Ranked, Profile, Ranking, Registration } from './screens'
+import {
+  Root,
+  Home,
+  Campaign,
+  Ranked,
+  Profile,
+  Ranking,
+  SignUp,
+  LogIn
+} from './screens'
 
 const queryClient = new QueryClient()
 
@@ -28,7 +37,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="profile" element={<Profile />} />
             </Route>
 
-            <Route path="/registration" element={<Registration />} />
+            <Route path="/sign-up" element={<SignUp />} />
+
+            <Route path="/log-in" element={<LogIn />} />
           </Routes>
         </BrowserRouter>
       </PlayerProvider>
