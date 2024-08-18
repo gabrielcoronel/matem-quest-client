@@ -1,4 +1,5 @@
 import 'animate.css'
+import 'katex/dist/katex.min.css'
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
