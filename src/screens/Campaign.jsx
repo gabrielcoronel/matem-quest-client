@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ChevronUp, ChevronDown } from 'lucide-react'
 import { Button } from '../components'
 
@@ -19,21 +20,22 @@ const LevelCircle = ({ level }) => {
 }
 
 const LevelStepper = () => {
+  const navigate = useNavigate()
   const [selectedLevelIndex, setSelectedLevelIndex] = useState(0)
 
   const levels = [
     {
-      description: "Descripción",
+      description: "Factorización",
+      route: "/gameplay/factoring"
     },
     {
-      description: "Descripción1",
+      description: "Expresiones Racionales",
+      route: "/gameplay/rational-expressions"
     },
     {
-      description: "Descripción2",
-    },
-    {
-      description: "Descripción3",
-    },
+      description: "Ecuaciones",
+      route: "/gameplay/equations"
+    }
   ]
 
   const incrementSelectedLevel = () => {
@@ -88,7 +90,7 @@ const LevelStepper = () => {
 
         <Button
           text="Jugar"
-          onClick={() => console.log("jugando")}
+          onClick={() => navigate(levels[selectedLevelIndex].route)}
         />
       </div>
     </div>

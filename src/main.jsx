@@ -15,7 +15,11 @@ import {
   Profile,
   Ranking,
   SignUp,
-  LogIn
+  LogIn,
+  Gameplay,
+  FactoringGameplay,
+  RationalExpressionsGameplay,
+  EquationsGameplay
 } from './screens'
 
 const queryClient = new QueryClient()
@@ -41,6 +45,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/sign-up" element={<SignUp />} />
 
             <Route path="/log-in" element={<LogIn />} />
+
+            <Route path="gameplay/" element={<Gameplay />}>
+              <Route path="factoring" element={<FactoringGameplay />} />
+
+              <Route path="rational-expressions" element={<RationalExpressionsGameplay />} />
+
+              <Route path="equations" element={<EquationsGameplay />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </PlayerProvider>

@@ -38,13 +38,12 @@ export default ({ challenges, setAccuracy, onFinish }) => {
       options={options}
       onSelect={handleSelect}
       leftAction={{
-        icon: isCurrentChallengeIndexFirst ? null : <ChevronLeft size={40} />,
-        text: isCurrentChallengeIndexFirst ? null : "Anterior",
+        hidden: isCurrentChallengeIndexFirst,
+        icon: <ChevronLeft size={40} />,
         onAction: handleLeftAction
       }}
       rightAction={{
         icon: isCurrentChallengeIndexLast ? <Check size={40} /> : <ChevronRight size={40} />,
-        text: isCurrentChallengeIndexLast ? "Terminar" : "Siguiente",
         onAction: handleRightAction
       }}
     />

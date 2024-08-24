@@ -95,22 +95,26 @@ export default ({
   return (
     <div className="w-full h-full rounded-lg bg-_purple border-2 border-_yellow">
       <div className="flex flex-col w-full h-full rounded-lg animate__animated animate__fadeIn">
-        <div className="flex justify-between items-center p-3 w-full grow-0">
-          <ActionButton
-            icon={leftAction.icon}
-            action={leftAction.onAction}
-            orientation="left"
-          />
+        <div className="flex justify-between items-center p-1.5 w-full grow-0">
+          <div className={leftAction.hidden ? "invisible" : ""}>
+            <ActionButton
+              icon={leftAction.icon}
+              action={leftAction.onAction}
+              orientation="left"
+            />
+          </div>
 
-          <ActionButton
-            icon={rightAction.icon}
-            action={rightAction.onAction}
-            orientation="right"
-          />
+          <div className={rightAction.hidden ? "invisible" : ""}>
+            <ActionButton
+              icon={rightAction.icon}
+              action={rightAction.onAction}
+              orientation="right"
+            />
+          </div>
         </div>
 
         <div className="w-full grow">
-          <div className="flex flex-col justify-evenly items-center w-full h-1/3">
+          <div className="flex flex-col justify-evenly items-center w-full h-1/4">
             <span className="font-primary text-2xl text-_yellow text-center">
               {statement}
             </span>
@@ -120,7 +124,7 @@ export default ({
             </TexBlock>
           </div>
 
-          <div className="flex flex-col w-full h-2/3">
+          <div className="flex flex-col w-full h-3/4">
             <Divider />
 
             {optionsElements}
