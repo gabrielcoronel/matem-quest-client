@@ -167,6 +167,12 @@ class Displayer {
 
     return texString
   }
+
+  static parse(string) {
+    const polynomial = Algebra.parse(string)
+
+    return polynomial
+  }
 }
 
 export default {

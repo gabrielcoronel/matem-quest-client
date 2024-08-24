@@ -34,7 +34,7 @@ const denumerateEnumeration = (enumeration) => {
 
   for (const [factorKey, count] of Object.entries(enumeration)) {
     for (let _ = 0; _ < count; _++) {
-      factors.push(Displayer.parse(factorKey))
+      factors.push(Polynomial.Displayer.parse(factorKey))
     }
   }
 
@@ -91,7 +91,7 @@ class Rational {
   add(rational) {
     const denominatorMinimumCommonFactorList = getMinimumCommonMultiple([
       this.#denominatorFactorList,
-      rational.denominatorFactorList
+      rational.getDenominatorFactorList()
     ])
     const thisNumeratorMissingFactorList = diffFactorLists([
       denominatorMinimumCommonFactorList,
@@ -99,11 +99,11 @@ class Rational {
     ])
     const rationalNumeratorMissingFactorList = diffFactorLists([
       denominatorMinimumCommonFactorList,
-      rational.denominatorFactorList
+      rational.getDenominatorFactorList()
     ])
     const numerator = Polynomial.Operator.getSum([
       Polynomial.Operator.getProduct([...this.#numeratorFactorList, ...thisNumeratorMissingFactorList]),
-      Polynomial.Operator.getProduct([...rational.numeratorFactorList, ...rationalNumeratorMissingFactorList])
+      Polynomial.Operator.getProduct([...rational.getNumeratorFactorList(), ...rationalNumeratorMissingFactorList])
     ])
 
     const sum = new Rational([numerator], denominatorMinimumCommonFactorList)
@@ -114,7 +114,7 @@ class Rational {
   subtract(rational) {
     const denominatorMinimumCommonFactorList = getMinimumCommonMultiple([
       this.#denominatorFactorList,
-      rational.denominatorFactorList
+      rational.getDenominatorFactorList()
     ])
     const thisNumeratorMissingFactorList = diffFactorLists([
       denominatorMinimumCommonFactorList,
@@ -122,11 +122,11 @@ class Rational {
     ])
     const rationalNumeratorMissingFactorList = diffFactorLists([
       denominatorMinimumCommonFactorList,
-      rational.denominatorFactorList
+      rational.getDenominatorFactorList()
     ])
     const numerator = Polynomial.Operator.getDifference([
       Polynomial.Operator.getProduct([...this.#numeratorFactorList, ...thisNumeratorMissingFactorList]),
-      Polynomial.Operator.getProduct([...rational.numeratorFactorList, ...rationalNumeratorMissingFactorList])
+      Polynomial.Operator.getProduct([...rational.getNumeratorFactorList(), ...rationalNumeratorMissingFactorList])
     ])
     const difference = new Rational([numerator], denominatorMinimumCommonFactorList)
 
@@ -134,16 +134,16 @@ class Rational {
   }
 
   multiply(rational) {
-    const numerator = [...this.#numeratorFactorList, ...rational.numeratorFactorList]
-    const denominator = [...this.#denominatorFactorList, ...rational.denominatorFactorList]
+    const numerator = [...this.#numeratorFactorList, ...rational.getNumeratorFactorList()]
+    const denominator = [...this.#denominatorFactorList, ...rational.getDenominatorFactorList()]
     const product = new Rational(numerator, denominator)
 
     return product
   }
 
   divide(rational) {
-    const numerator = [...this.#numeratorFactorList, ...rational.denominatorFactorList]
-    const denominator = [...this.#denominatorFactorList, ...rational.numeratorFactorList]
+    const numerator = [...this.#numeratorFactorList, ...rational.getDenominatorFactorList()]
+    const denominator = [...this.#denominatorFactorList, ...rational.getNumeratorFactorList()]
     const product = new Rational(numerator, denominator)
 
     return product

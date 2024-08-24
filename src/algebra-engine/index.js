@@ -29,5 +29,6 @@ Array.prototype.squash = function(squasher) {
   return squashed
 }
 
+export { default as Fraction } from './fraction.js'
 export { default as Polynomial } from './polynomial.js'
 export { default as Rational } from './rational.js'

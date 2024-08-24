@@ -1,4 +1,4 @@
-export default class {
+class Randomizer {
   static getInteger(lowerBound, upperBound) {
     console.assert(upperBound >= lowerBound)
 
@@ -9,4 +9,13 @@ export default class {
 
     return integer
   }
+
+  static getBoolean() {
+    const integer = Randomizer.getInteger(0, 1)
+    const boolean = integer === 0
+
+    return boolean
+  }
 }
+
+export default Randomizer
