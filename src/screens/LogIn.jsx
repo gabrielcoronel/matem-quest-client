@@ -15,7 +15,7 @@ import {
 
 export default () => {
   const navigate = useNavigate()
-  const playerContextValue = usePlayer()
+  const { setPlayer } = usePlayer()
   const [formState, createFormSetter] = useFormSetters({
     email: "",
     password: ""
@@ -60,9 +60,10 @@ export default () => {
       "Bienvenido de vuelta"
     )
 
-    localStorage.setItem("matem-quest-token", token)
-
-    playerContextValue.setPlayer(() => ({ ...playerContextValue.player, playerId: player_id }))
+    setPlayer(() => ({
+      token: token,
+      playerId: player_id
+    }))
 
     navigate("/home")
   }

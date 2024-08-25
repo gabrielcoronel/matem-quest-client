@@ -6,9 +6,21 @@ export const PlayerProvider = ({ children }) => {
   const [player, setPlayer] = useState(null)
 
   useEffect(() => {
-    const stringifiedPlayer = JSON.stringify(player)
+    const stringifiedPlayer = localStorage.getItem("matem-quest-player")
 
-    localStorage.setItem("matem-quest-player", stringifiedPlayer)
+    if (stringifiedPlayer !== null) {
+      const player = JSON.parse(stringifiedPlayer)
+
+      setPlayer(player)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (player !== null) {
+      const stringifiedPlayer = JSON.stringify(player)
+
+      localStorage.setItem("matem-quest-player", stringifiedPlayer)
+    }
   }, [player])
 
   const contextValue = {

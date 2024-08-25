@@ -78,7 +78,7 @@ const CredentialsForm = ({ formState, createFormSetter, onSubmit }) => {
 
 export default () => {
   const navigate = useNavigate()
-  const playerContextValue = usePlayer()
+  const { setPlayer } = usePlayer()
   const [currentForm, setCurrentForm] = useState("personal")
   const [formState, createFormSetter] = useFormSetters({
     name: "",
@@ -127,9 +127,10 @@ export default () => {
       "Disfruta tu aventura"
     )
 
-    localStorage.setItem("matem-quest-token", token)
-
-    playerContextValue.setPlayer(() => ({ ...playerContextValue.player, playerId: player_id }))
+    setPlayer(() => ({
+      token: token,
+      playerId: player_id
+    }))
 
     navigate("/home")
   }

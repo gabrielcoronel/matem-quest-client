@@ -7,8 +7,16 @@ const axiosClient = axios.create({
   baseURL: API_URL
 })
 
+const getAuthenticationToken = () => {
+  const stringifiedPlayer = localStorage.getItem("matem-quest-player")
+  const player = stringifiedPlayer !== null ? JSON.parse(stringifiedPlayer) : null
+  const token = player?.token
+
+  return token
+}
+
 export default async (endpoint, data) => {
-  const token = localStorage.getItem("matem-quest-token")
+  const token = getAuthenticationToken()
 
   try {
     const response = await axiosClient.post(
