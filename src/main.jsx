@@ -19,7 +19,8 @@ import {
   Gameplay,
   FactoringGameplay,
   RationalExpressionsGameplay,
-  EquationsGameplay
+  EquationsGameplay,
+  RankedGameplay
 } from './screens'
 
 const queryClient = new QueryClient()
@@ -52,6 +53,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="rational-expressions" element={<RationalExpressionsGameplay />} />
 
               <Route path="equations" element={<EquationsGameplay />} />
+
+              <Route path="ranked" element={<RankedGameplay />} />
             </Route>
           </Routes>
         </BrowserRouter>
