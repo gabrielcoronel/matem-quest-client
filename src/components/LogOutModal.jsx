@@ -1,7 +1,18 @@
+import { useNavigate } from 'react-router-dom'
+import { usePlayer } from '../contexts/player-context'
 import { DoorOpen } from 'lucide-react'
 import { Modal, Button } from './'
 
 export default ({ isOpen, onClose }) => {
+  const navigate = useNavigate()
+  const { setPlayer } = usePlayer()
+
+  const handleLogOut = () => {
+    setPlayer(() => ({ token: null, playerId: null }))
+
+    navigate("/sign-up")
+  }
+
   return (
     <Modal
       title="Cerrar sesión"
@@ -15,7 +26,7 @@ export default ({ isOpen, onClose }) => {
 
       <Button
         text="Confirmar"
-        onClick={null}
+        onClick={handleLogOut}
       />
     </Modal>
   )
