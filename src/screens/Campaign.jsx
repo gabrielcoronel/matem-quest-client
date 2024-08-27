@@ -21,8 +21,6 @@ const LevelCircle = ({ level }) => {
 
 const LevelStepper = () => {
   const navigate = useNavigate()
-  const [selectedLevelIndex, setSelectedLevelIndex] = useState(0)
-
   const levels = [
     {
       description: "Factorización",
@@ -37,6 +35,7 @@ const LevelStepper = () => {
       route: "/gameplay/equations"
     }
   ]
+  const [selectedLevelIndex, setSelectedLevelIndex] = useState(0)
 
   const incrementSelectedLevel = () => {
     const nextSelectedLevel = selectedLevelIndex + 1 < levels.length ? selectedLevelIndex + 1 : levels.length - 1
@@ -54,7 +53,10 @@ const LevelStepper = () => {
     <div className="w-1/2 flex gap-x-7 animate__animated animate__fadeIn">
       <div className="w-fit flex flex-col items-center">
         <div
-          className="hover:scale-110 transition-all"
+          className={`
+            hover:scale-110 transition-all cursor-pointer
+            ${selectedLevelIndex <= 0 ? "invisible" : ""}
+          `}
           onClick={decrementSelectedLevel}
         >
           <ChevronUp
@@ -69,7 +71,10 @@ const LevelStepper = () => {
         />
 
         <div
-          className="hover:scale-110 transition-all"
+          className={`
+            hover:scale-110 transition-all cursor-pointer
+            ${selectedLevelIndex >= (levels.length - 1) ? "invisible" : ""}
+          `}
           onClick={incrementSelectedLevel}
         >
           <ChevronDown
