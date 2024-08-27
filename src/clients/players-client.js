@@ -42,7 +42,7 @@ export default class {
       playerId
     }
 
-    await dispatchAction("/players/increment-campaign-level", data)
+    await dispatchAction("/players-service/increment-campaign-level", data)
   }
 
   static async updateScore(playerId, differential) {
@@ -51,6 +51,6 @@ export default class {
       differential
     }
 
-    await dispatchAction("/players/update-score", data)
+    await dispatchAction("/players-service/update-score", data)
   }
 }

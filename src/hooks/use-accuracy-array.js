@@ -27,5 +27,5 @@ export default (length) => {
 
   const accuracyState = getAccuracyState()
 
-  return [accuracyState, setAccuracy]
+  return { accuracyState, accuracies, setAccuracy }
 }
