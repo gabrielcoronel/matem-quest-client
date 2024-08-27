@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { usePlayer } from '../contexts/player-context'
-import useHover from '../hooks/use-hover.js'
 import useModalHandler from '../hooks/use-modal-handler.js'
 import formatFullname from '../utils/format-fullname'
 import { PlayersClient } from '../clients'
 import {
+  Variable,
+  Divide,
+  Equal,
+  CircleHelp,
   DoorOpen,
   Mail,
   KeyRound,
@@ -20,6 +23,26 @@ import {
   ChangePasswordModal,
   LoadingIndicator
 } from '../components'
+
+const getPlayerBadges = (player) => {
+  if (player.badges === null || player.badges[0] === null) {
+    return [{
+      icon: "circle-help",
+      title: "No hay medallas",
+      description: "Completa los niveles del modo campaña para obtener medallas"
+    }]
+  }
+
+  const badgesIds = [...new Set(player.badges.map(({ badge_id }) => badge_id))]
+  const badges = badgesIds
+    .map((badgeId) => {
+      const [badge] = player.badges.filter(({ badge_id }) => badge_id === badgeId)
+
+      return badge
+    })
+
+  return badges
+}
 
 const Actions = ({ player }) => {
   const logOutModalHandler = useModalHandler()
@@ -77,67 +100,90 @@ const Actions = ({ player }) => {
 }
 
 const Avatar = ({ player }) => {
-  const [isHovering, hoveringEvents] = useHover()
   const [currentBadgeIndex, setCurrentBadgeIndex] = useState(0)
+  const badges = getPlayerBadges(player)
+  const currentBadge = badges[currentBadgeIndex]
+  
+  const BadgeIcon = () => {
+    const icon = currentBadge.icon
+
+    if (icon === "variable") {
+      return <Variable size={175} color="#4c1d95" />
+    }
+
+    if (icon === "divide") {
+      return <Divide size={175} color="#4c1d95" />
+    }
+
+    if (icon === "equal") {
+      return <Equal size={175} color="#4c1d95" />
+    }
+
+    if (icon === "circle-help") {
+      return <CircleHelp size={175} color="#4c1d95" />
+    }
+  }
 
   const incrementBadgeIndex = () => {
-    const amountBadges = player.badges.length
-    const nextBadgeIndex = currentBadgeIndex + 1 < amountBadges ? currentBadgeIndex + 1 : 0
-
-    setCurrentBadgeIndex(nextBadgeIndex)
+    if (currentBadgeIndex < badges.length - 1) {
+      setCurrentBadgeIndex(currentBadgeIndex + 1)
+    }
   }
 
   const decrementBadgeIndex = () => {
-    const amountBadges = player.badges.length
-    const nextBadgeIndex = currentBadgeIndex - 1 >= 0 ? currentBadgeIndex - 1 : amountBadges - 1
-
-    setCurrentBadgeIndex(nextBadgeIndex)
-  }
-
-  const handleSelectBadge = () => {
-    console.log(player.badges[currentBadgeIndex])
+    if (currentBadgeIndex > 0) {
+      setCurrentBadgeIndex(currentBadgeIndex - 1)
+    }
   }
 
   return (
-    <div className="flex flex-row justify-center items-center gap-x-7 gap-y-3 w-full h-1/2">
-      <div onClick={decrementBadgeIndex}>
-        <CircleChevronLeft
-          size={90}
-          color="#f5d922"
-          className="hover:scale-105 transition-all"
-        />
-      </div>
-
-      <div
-        className="relative w-fit h-fit"
-      >
-        <div
-          key={currentBadgeIndex}
-          className="w-fit h-fit rounded-full border-4 border-_yellow bg-_black animate__animated animate__fadeIn"
-        >
-          <img
-            {...hoveringEvents}
-            style={{ opacity: isHovering ? 0.6 : 1 }}
-            src="https://www.rothco.com/upload/product/product/large/1904-A-amazon.jpg"
-            className="w-60 h-60 rounded-full"
-            onClick={handleSelectBadge}
+    <div className="flex flex-col justify-center items-center gap-y-3 w-full h-1/2">
+      <div className="flex flex-row justify-center items-center gap-x-7 gap-y-3 w-full h-full">
+        <div onClick={decrementBadgeIndex}>
+          <CircleChevronLeft
+            size={60}
+            color="#f5d922"
+            className={`
+              hover:scale-105 transition-all cursor-pointer
+              ${currentBadgeIndex <= 0 ? "invisible" : ""}
+            `}
           />
         </div>
 
-        <div className="flex justify-center items-center w-16 h-16 rounded-full bg-_yellow p-5 absolute right-0 top-2/3">
-          <span className="font-bold font-primary text-2xl text-_purple">
-            {player.campaign_level}
-          </span>
+        <div
+          className="relative w-fit h-fit"
+        >
+          <div
+            key={currentBadgeIndex}
+            className="w-fit h-fit rounded-full bg-_yellow border-4 border-_yellow bg-_black animate__animated animate__fadeIn"
+          >
+            <BadgeIcon />
+          </div>
+        </div>
+
+        <div onClick={incrementBadgeIndex}>
+          <CircleChevronRight
+            size={60}
+            color="#f5d922"
+            className={`
+              hover:scale-105 transition-all cursor-pointer
+              ${currentBadgeIndex >= (badges.length - 1) ? "invisible" : ""}
+            `}
+          />
         </div>
       </div>
 
-      <div onClick={incrementBadgeIndex}>
-        <CircleChevronRight
-          size={90}
-          color="#f5d922"
-          className="hover:scale-105 transition-all"
-        />
-      </div>
+      <span
+        className="font-primary text-2xl text-_yellow"
+      >
+        {currentBadge.title}
+      </span>
+
+      <span
+        className="font-primary text-xl text-_white"
+      >
+        {currentBadge.description}
+      </span>
     </div>
   )
 }
@@ -157,10 +203,11 @@ const Profile = ({ player }) => {
 }
 
 export default () => {
-  const { player: { playerId } } = usePlayer()
+  const { player } = usePlayer()
   const playerQuery = useQuery({
-    queryKey: ["profile", playerId],
-    queryFn: () => PlayersClient.findById(playerId)
+    queryKey: ["profile", player?.playerId],
+    queryFn: () => PlayersClient.findById(player?.playerId),
+    enabled: player !== null
   })
 
   if (playerQuery.isFetching) {
