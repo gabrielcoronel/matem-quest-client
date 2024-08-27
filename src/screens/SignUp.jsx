@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { usePlayer } from '../contexts/player-context'
 import useFormSetters from '../hooks/use-form-setters'
 import toast from '../utils/toast'
+import validator from 'validator'
 import { readClientError, AuthClient } from '../clients'
 import { UserRound, KeyRound, Check, WifiOff, Ban } from 'lucide-react'
 import {
@@ -14,7 +15,7 @@ import {
   Spinner
 } from '../components'
 
-const PersonalInformationForm = ({ formState, createFormSetter, onSubmit }) => {
+const PersonalInformationForm = ({ formState, createFormSetter, formError, onSubmit }) => {
   return (
     <div className="flex flex-col items-center w-full gap-y-3 animate__animated animate__fadeIn">
       <UserRound
@@ -44,11 +45,15 @@ const PersonalInformationForm = ({ formState, createFormSetter, onSubmit }) => {
         text="Continuar"
         onClick={onSubmit}
       />
+
+      <span className="font-primary text-lg text-_yellow animate__animated animate__fadeIn">
+        {formError}
+      </span>
     </div>
   )
 }
 
-const CredentialsForm = ({ formState, createFormSetter, onSubmit }) => {
+const CredentialsForm = ({ formState, createFormSetter, formError, onSubmit }) => {
   return (
     <div className="flex flex-col items-center w-full gap-y-3 animate__animated animate__fadeIn">
       <KeyRound
@@ -71,7 +76,12 @@ const CredentialsForm = ({ formState, createFormSetter, onSubmit }) => {
       <Button
         text="Crear cuenta"
         onClick={onSubmit}
+        disabled={formError !== null}
       />
+
+      <span className="font-primary text-lg text-_yellow animate__animated animate__fadeIn">
+        {formError}
+      </span>
     </div>
   )
 }
@@ -80,13 +90,38 @@ export default () => {
   const navigate = useNavigate()
   const { setPlayer } = usePlayer()
   const [currentForm, setCurrentForm] = useState("personal")
-  const [formState, createFormSetter] = useFormSetters({
+
+  const formValidator = ({ name, first_surname, second_surname, email, password }) => {
+    if (validator.isEmpty(name)) {
+      return "Ingresa tu nombre"
+    }
+
+    if (validator.isEmpty(first_surname)) {
+      return "Ingresa tus apellidos"
+    }
+
+    if (validator.isEmpty(second_surname)) {
+      return "Ingresa tus apellidos"
+    }
+
+    if (!validator.isEmail(email)) {
+      return "Ingresa un correo electrónico válido"
+    }
+
+    if (validator.isEmpty(password)) {
+      return "Ingresa una contraseña"
+    }
+
+    return null
+  }
+
+  const [formState, createFormSetter, formError] = useFormSetters({
     name: "",
     first_surname: "",
     second_surname: "",
     email: "",
     password: ""
-  })
+  }, formValidator)
 
   const handleOnMutate = () => {
     toast(
@@ -155,11 +190,13 @@ export default () => {
               <PersonalInformationForm
                 formState={formState}
                 createFormSetter={createFormSetter}
+                formError={formError}
                 onSubmit={() => setCurrentForm("credentials")}
               /> :
               <CredentialsForm
                 formState={formState}
                 createFormSetter={createFormSetter}
+                formError={formError}
                 onSubmit={() => signUpMutation.mutate(formState)}
               />
           }

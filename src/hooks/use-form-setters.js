@@ -1,7 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default (initialState) => {
+export default (initialState, validator) => {
   const [formState, setFormState] = useState(initialState)
+  const [formError, setFormError] = useState(null)
+
+  useEffect(() => {
+    if (validator) {
+      const newError = validator(formState)
+
+      setFormError(newError)
+    }
+  }, [formState])
 
   const createFormSetter = (fieldName) => {
     const setter = (fieldValue) => {
@@ -16,5 +25,5 @@ export default (initialState) => {
     return setter
   }
 
-  return [formState, createFormSetter]
+  return [formState, createFormSetter, formError]
 }

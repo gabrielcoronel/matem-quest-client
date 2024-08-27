@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { usePlayer } from '../contexts/player-context'
 import useFormSetters from '../hooks/use-form-setters'
 import toast from '../utils/toast'
+import validator from 'validator'
 import { readClientError, AuthClient } from '../clients'
 import { DoorOpen, Check, WifiOff, Ban } from 'lucide-react'
 import {
@@ -16,10 +17,23 @@ import {
 export default () => {
   const navigate = useNavigate()
   const { setPlayer } = usePlayer()
-  const [formState, createFormSetter] = useFormSetters({
+
+  const formValidator = ({ email, password }) => {
+    if (!validator.isEmail(email)) {
+      return "Ingresa un correo electrónico válido"
+    }
+
+    if (validator.isEmpty(password)) {
+      return "Ingresa una contraseña"
+    }
+
+    return null
+  }
+
+  const [formState, createFormSetter, formError] = useFormSetters({
     email: "",
     password: ""
-  })
+  }, formValidator)
 
   const handleOnMutate = () => {
     toast(
@@ -103,7 +117,12 @@ export default () => {
           <Button
             text="Iniciar sesión"
             onClick={() => logInMutation.mutate(formState)}
+            disabled={formError !== null}
           />
+
+          <span className="font-primary text-lg text-_yellow animate__animated animate__fadeIn">
+            {formError}
+          </span>
 
           <div className="flex flex-col justify-center items-center w-full gap-y-3">
             <Divider />
